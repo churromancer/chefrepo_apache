@@ -2,11 +2,11 @@ package 'httpd' do
    action :install
 end
 
-file '/var/www/html/index.html' do
-   content "<h1>Hostname: #{node['hostname']}</h1><p>
-	    <h1>IP Address: #{node['ipaddress']}</h1>
-
-"
+template '/var/www/html/index.html' do
+   source 'index.html.erb'
+   variables(
+      :name => 'John Doe'
+   )
 end
 
 service 'httpd' do
