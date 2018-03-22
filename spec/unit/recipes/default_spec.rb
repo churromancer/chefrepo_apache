@@ -13,8 +13,8 @@ describe 'apache::default' do
       runner.converge(described_recipe)
     end
 
-    it 'converges successfully' do
-      expect { chef_run }.to_not raise_error
+    it 'installs the correct package' do
+      expect{chef_run}.to install_package('httpd')
     end
   end
 end

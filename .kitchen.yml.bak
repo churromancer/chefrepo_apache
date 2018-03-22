@@ -1,0 +1,32 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: ChefLab
+  region: us-west-1
+  availability_zone: c
+  subnet_id: subnet-9d7bfec5
+  instance_type: t2.micro
+  image_id: ami-65e0e305
+  security_group_ids: ["sg-16523c6f"]
+  retryable_tries: 120
+
+provisioner:
+  name: chef_zero
+
+verifier:
+  name: inspec
+  
+  transport:
+  ssh_key: ChefLab.pem
+
+platforms:
+  - name: centos-7.2
+
+suites:
+  - name: default
+    run_list:
+      - recipe[apache::default]
+    verifier:
+      inspec_tests:
+        - test/recipes
+    attributes:
